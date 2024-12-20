@@ -42,6 +42,7 @@ jobs:
         run: bash ./build/build.sh --exclusive --target=CreatePackage
 
       - name: Publish to NuGet Gallery
+        if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}
         run: >
           dotnet nuget push ./output/*.nupkg
           --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
