@@ -26,20 +26,20 @@ jobs:
 
       - name: Initialize
         id: init
-        run: ./build/build.ps1 --exclusive --target=Initialize
+        run: bash ./build/build.sh --exclusive --target=Initialize
 
       - name: Restore NuGet packages
-        run: ./build/build.ps1 --exclusive --target=RestoreNuGetPackages
+        run: bash ./build/build.sh --exclusive --target=RestoreNuGetPackages
 
       - name: Check code style
-        run: ./build/build.ps1 --exclusive --target=CheckCodeStyle
+        run: bash ./build/build.sh --exclusive --target=CheckCodeStyle
 
       - name: Build
-        run: ./build/build.ps1 --exclusive --target=Build
+        run: bash ./build/build.sh --exclusive --target=Build
 
       - name: Create package
         if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}
-        run: ./build/build.ps1 --exclusive --target=CreatePackage
+        run: bash ./build/build.sh --exclusive --target=CreatePackage
 
       - name: Publish to NuGet Gallery
         run: >
