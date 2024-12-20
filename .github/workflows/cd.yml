@@ -24,6 +24,9 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Debug
+        run: ls ./build
+
       - name: Initialize
         id: init
         run: ./build/build.sh --exclusive --target=Initialize
