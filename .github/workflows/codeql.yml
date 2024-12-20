@@ -33,7 +33,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Debug
-        run: ls ./build
+        run: ls -al ./build
 
       - name: Restore NuGet packages
         run: ./build/build.sh --exclusive --target=RestoreNuGetPackages
