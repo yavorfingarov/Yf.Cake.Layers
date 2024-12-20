@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build.csproj", "{586281F3-809D-448B-B5B0-0E3C0664301B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yf.Cake.Layers", "..\src\Yf.Cake.Layers\Yf.Cake.Layers.csproj", "{82E59724-9BD1-4855-A896-02062D40CF6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{586281F3-809D-448B-B5B0-0E3C0664301B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586281F3-809D-448B-B5B0-0E3C0664301B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586281F3-809D-448B-B5B0-0E3C0664301B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586281F3-809D-448B-B5B0-0E3C0664301B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82E59724-9BD1-4855-A896-02062D40CF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82E59724-9BD1-4855-A896-02062D40CF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82E59724-9BD1-4855-A896-02062D40CF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82E59724-9BD1-4855-A896-02062D40CF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

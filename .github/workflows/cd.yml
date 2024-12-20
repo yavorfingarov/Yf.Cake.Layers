@@ -1,0 +1,48 @@
+name: CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  DOTNET_VERSION: 9.0.x
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Initialize
+        id: init
+        run: bash ./build/build.sh --exclusive --target=Initialize
+
+      - name: Restore NuGet packages
+        run: bash ./build/build.sh --exclusive --target=RestoreNuGetPackages
+
+      - name: Check code style
+        run: bash ./build/build.sh --exclusive --target=CheckCodeStyle
+
+      - name: Build
+        run: bash ./build/build.sh --exclusive --target=Build
+
+      - name: Create package
+        if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}
+        run: bash ./build/build.sh --exclusive --target=CreatePackage
+
+      - name: Publish to NuGet Gallery
+        if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}
+        run: >
+          dotnet nuget push ./output/*.nupkg
+          --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
