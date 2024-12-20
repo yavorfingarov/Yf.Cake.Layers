@@ -51,13 +51,13 @@ namespace Yf.Cake.Layers.Steps
 
         private static void CheckSrc(BuildContext context)
         {
-            context.Log.Information($"Checking './src' for changes...");
+            context.Log.Information($"Checking 'src/' for changes...");
             var srcChanges = true;
             if (context.GitIsValidRepository(context.Environment.WorkingDirectory))
             {
                 srcChanges = context
                     .GitDiff(context.Environment.WorkingDirectory, "HEAD~1", "HEAD")
-                    .Any(x => x.Path.Contains("/src/"));
+                    .Any(x => x.Path.StartsWith("src/", StringComparison.Ordinal));
             }
 
             context.SetOutput("src-changed", srcChanges.ToString().ToLowerInvariant());
