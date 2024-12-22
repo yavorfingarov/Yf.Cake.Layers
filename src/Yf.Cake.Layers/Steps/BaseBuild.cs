@@ -57,7 +57,7 @@ namespace Yf.Cake.Layers.Steps
                 Color = maintainability.MapToColor(9, 19)
             };
 
-            var metricsFilename = metricsFilePath.GetFilenameWithoutExtension();
+            var metricsFilename = metricsFilePath.GetFilename();
             context.MoveFile(metricsFilePath, $"{context.TmpDirectory}/{metricsFilename}");
 
             context.CreateStatusGistJson("maintainability", statusGistJson);

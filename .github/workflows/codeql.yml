@@ -1,0 +1,45 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: 30 9 * * 1
+
+env:
+  DOTNET_VERSION: 9.0.x
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: actions, csharp
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Initialize
+      id: init
+      run: bash ./build/build.sh --exclusive --target=Initialize
+
+    - name: Restore NuGet packages
+      run: bash ./build/build.sh --exclusive --target=RestoreNuGetPackages
+
+    - name: Build
+      run: bash ./build/build.sh --exclusive --target=Build
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
