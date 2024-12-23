@@ -15,7 +15,7 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -29,20 +29,20 @@ jobs:
 
       - name: Initialize
         id: init
-        run: bash ./build/build.sh --exclusive --target=Initialize
+        run: ./build/build.ps1 --exclusive --target=Initialize
 
       - name: Restore NuGet packages
-        run: bash ./build/build.sh --exclusive --target=RestoreNuGetPackages
-
-      - name: Check code style
-        run: bash ./build/build.sh --exclusive --target=CheckCodeStyle
+        run: ./build/build.ps1 --exclusive --target=RestoreNuGetPackages
 
       - name: Build
-        run: bash ./build/build.sh --exclusive --target=Build
+        run: ./build/build.ps1 --exclusive --target=Build
+
+      - name: Scan code
+        run: ./build/build.ps1 --exclusive --target=ScanCode
 
       - name: Create package
         if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}
-        run: bash ./build/build.sh --exclusive --target=CreatePackage
+        run: ./build/build.ps1 --exclusive --target=CreatePackage
 
       - name: Publish to NuGet Gallery
         if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}

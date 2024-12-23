@@ -1,6 +1,7 @@
 ﻿global using System.Globalization;
 global using Cake.Common.IO;
 global using Cake.Common.Tools.DotNet;
+global using Cake.Common.Tools.DotNet.Build;
 global using Cake.Common.Tools.DotNet.MSBuild;
 global using Cake.Core.Diagnostics;
 global using Cake.Frosting;
