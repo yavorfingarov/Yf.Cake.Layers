@@ -27,7 +27,6 @@ namespace Yf.Cake.Layers.Steps
 
         public static void RunSecurityScan(BuildContext context)
         {
-            context.Log.Information("Running security scan...");
             context.DotNetTool("tool install Microsoft.CST.DevSkim.CLI --create-manifest-if-needed");
             context.DotNetTool("tool run devskim analyze -E " +
                 "--file-format=text " +
