@@ -8,6 +8,7 @@ namespace Yf.Cake.Layers.Steps
     {
         public virtual bool CalculateCoverage => true;
         public virtual string? Filter => null;
+        public virtual string[] CoverageReportClassFilter => Array.Empty<string>();
 
         public override void Run(BuildContext context)
         {
@@ -27,7 +28,7 @@ namespace Yf.Cake.Layers.Steps
                 settings.Collectors = new[] { "XPlat Code Coverage" };
             }
 
-            context.DotNetTest(context.Root, settings);
+            context.DotNetTest(context.RootDirectory, settings);
 
             if (CalculateCoverage)
             {
@@ -35,12 +36,12 @@ namespace Yf.Cake.Layers.Steps
             }
         }
 
-        private static void GenerateCoverageReport(BuildContext context)
+        private void GenerateCoverageReport(BuildContext context)
         {
             var coverageFiles = context.GetFiles($"{context.TestResultsDirectory}/**/coverage.cobertura.xml");
             var settings = new ReportGeneratorSettings()
             {
-                ClassFilters = new[] { "-*Generated*", "-*RegexGenerator*" },
+                ClassFilters = CoverageReportClassFilter,
                 ReportTypes = new[]
                             {
                     ReportGeneratorReportType.Html,
@@ -51,6 +52,16 @@ namespace Yf.Cake.Layers.Steps
             context.ReportGenerator(coverageFiles, $"{context.TestResultsDirectory}/reports", settings);
 
             SetOutputs(context);
+        }
+
+        public override void OnError(Exception exception, BuildContext context)
+        {
+            var snapshotsDirectory = $"{context.TestResultsDirectory}/snapshots";
+            context.CreateDirectory(snapshotsDirectory);
+            context.CopyFiles("./tests/**/*.received.*", snapshotsDirectory, preserveFolderStructure: true);
+            context.UploadArtifact(context.TestResultsDirectory, $"TestResults-{context.Timestamp}");
+
+            throw exception;
         }
 
         private static void SetOutputs(BuildContext context)
@@ -72,16 +83,6 @@ namespace Yf.Cake.Layers.Steps
 
             context.CreateStatusGistJson("test-coverage", statusGistJson);
             context.SetStepSummaryOutput("Test coverage", coveragePercent);
-        }
-
-        public override void OnError(Exception exception, BuildContext context)
-        {
-            var snapshotsDirectory = $"{context.TestResultsDirectory}/snapshots";
-            context.CreateDirectory(snapshotsDirectory);
-            context.CopyFiles("./tests/**/*.received.*", snapshotsDirectory, preserveFolderStructure: true);
-            context.UploadArtifact(context.TestResultsDirectory, $"TestResults-{context.Timestamp}");
-
-            throw exception;
         }
     }
 }

@@ -11,7 +11,7 @@
                 NoRestore = true
             };
 
-            context.DotNetBuild(context.Root, settings);
+            context.DotNetBuild(context.RootDirectory, settings);
         }
     }
 }
