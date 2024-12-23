@@ -29,21 +29,26 @@ namespace Yf.Cake.Layers.Steps
 
             context.DotNetTest(context.Root, settings);
 
-            if (!CalculateCoverage)
+            if (CalculateCoverage)
             {
-                return;
+                GenerateCoverageReport(context);
             }
+        }
 
+        private static void GenerateCoverageReport(BuildContext context)
+        {
             var coverageFiles = context.GetFiles($"{context.TestResultsDirectory}/**/coverage.cobertura.xml");
-            context.ReportGenerator(coverageFiles, $"{context.TestResultsDirectory}/reports", new()
+            var settings = new ReportGeneratorSettings()
             {
                 ClassFilters = new[] { "-*Generated*", "-*RegexGenerator*" },
                 ReportTypes = new[]
-                {
+                            {
                     ReportGeneratorReportType.Html,
                     ReportGeneratorReportType.JsonSummary
                 }
-            });
+            };
+
+            context.ReportGenerator(coverageFiles, $"{context.TestResultsDirectory}/reports", settings);
 
             SetOutputs(context);
         }
