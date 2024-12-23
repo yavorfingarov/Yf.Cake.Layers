@@ -18,16 +18,16 @@ namespace Build
         }
 
         [IsDependentOn(typeof(RestoreNuGetPackages))]
-        public sealed class ScanCode : BaseScanCode
-        {
-        }
-
-        [IsDependentOn(typeof(ScanCode))]
         public sealed class Build : BaseBuild
         {
         }
 
         [IsDependentOn(typeof(Build))]
+        public sealed class ScanCode : BaseScanCode
+        {
+        }
+
+        [IsDependentOn(typeof(ScanCode))]
         public sealed class CreatePackage : BasePack
         {
         }
