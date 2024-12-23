@@ -83,15 +83,15 @@ namespace Yf.Cake.Layers.Steps
 
             var directoryBuildProps = $"{context.Root}Directory.Build.props";
             var targetFrameworks =
-                context.XmlPeek(context.TargetProject, "Project/PropertyGroup/TargetFrameworks/@Value", xmlPeekSettings) ??
-                context.XmlPeek(directoryBuildProps, "Project/PropertyGroup/TargetFrameworks/@Value", xmlPeekSettings);
+                context.XmlPeek(context.TargetProject, "Project/PropertyGroup/TargetFrameworks", xmlPeekSettings) ??
+                context.XmlPeek(directoryBuildProps, "Project/PropertyGroup/TargetFrameworks", xmlPeekSettings);
 
             string? framework;
             if (targetFrameworks == null)
             {
                 framework =
-                    context.XmlPeek(context.TargetProject, "Project/PropertyGroup/TargetFramework/@Value", xmlPeekSettings) ??
-                    context.XmlPeek(directoryBuildProps, "Project/PropertyGroup/TargetFramework/@Value", xmlPeekSettings);
+                    context.XmlPeek(context.TargetProject, "Project/PropertyGroup/TargetFramework", xmlPeekSettings) ??
+                    context.XmlPeek(directoryBuildProps, "Project/PropertyGroup/TargetFramework", xmlPeekSettings);
             }
             else
             {
