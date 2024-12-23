@@ -18,14 +18,13 @@ namespace Build
         }
 
         [IsDependentOn(typeof(RestoreNuGetPackages))]
-        public sealed class CheckCodeStyle : BaseCheckCodeStyle
+        public sealed class ScanCode : BaseScanCode
         {
         }
 
-        [IsDependentOn(typeof(CheckCodeStyle))]
+        [IsDependentOn(typeof(ScanCode))]
         public sealed class Build : BaseBuild
         {
-            public override bool RunCalculateMetrics => false;
         }
 
         [IsDependentOn(typeof(Build))]

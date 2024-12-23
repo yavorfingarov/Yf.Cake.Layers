@@ -34,8 +34,8 @@ jobs:
       - name: Restore NuGet packages
         run: bash ./build/build.sh --exclusive --target=RestoreNuGetPackages
 
-      - name: Check code style
-        run: bash ./build/build.sh --exclusive --target=CheckCodeStyle
+      - name: Scan code
+        run: bash ./build/build.sh --exclusive --target=ScanCode
 
       - name: Build
         run: bash ./build/build.sh --exclusive --target=Build
