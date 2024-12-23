@@ -12,7 +12,7 @@ namespace Yf.Cake.Layers
 
         public string Timestamp { get; }
         public string BuildConfiguration { get; }
-        public string Root { get; set; }
+        public string RootDirectory { get; set; }
         public string OutputDirectory { get; }
         public string TestResultsDirectory { get; }
         public string TmpDirectory { get; }
@@ -31,7 +31,7 @@ namespace Yf.Cake.Layers
                 .Single()
                 .FullPath;
 
-            Root = "./";
+            RootDirectory = context.Environment.WorkingDirectory.FullPath;
             OutputDirectory = "./output";
             TestResultsDirectory = "./tmp/test-results";
             TmpDirectory = "./tmp";
@@ -47,11 +47,11 @@ namespace Yf.Cake.Layers
             File.WriteAllText($"{TmpDirectory}/{filename}.json", content);
         }
 
-        public void SetOutput(string key, string value)
+        public void SetEnvironmentVariable(string key, string value)
         {
             if (_GitHubActions.IsRunningOnGitHubActions)
             {
-                _GitHubActions.Commands.SetOutputParameter(key, value);
+                _GitHubActions.Commands.SetEnvironmentVariable(key, value);
             }
             else
             {

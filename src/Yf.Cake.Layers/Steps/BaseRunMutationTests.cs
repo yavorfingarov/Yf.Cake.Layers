@@ -1,5 +1,4 @@
 ﻿using System.Text.RegularExpressions;
-using Cake.Core.IO;
 
 namespace Yf.Cake.Layers.Steps
 {

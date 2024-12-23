@@ -4,7 +4,7 @@
     {
         public override void Run(BuildContext context)
         {
-            context.DotNetRestore(context.Root);
+            context.DotNetRestore(context.RootDirectory);
         }
     }
 }

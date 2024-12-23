@@ -29,23 +29,23 @@ jobs:
 
       - name: Initialize
         id: init
-        run: .\build\build.ps1 --exclusive --target=Initialize
+        run: .\build\build.ps1 --exclusive --target Initialize
 
       - name: Restore NuGet packages
-        run: .\build\build.ps1 --exclusive --target=RestoreNuGetPackages
+        run: .\build\build.ps1 --exclusive --target RestoreNuGetPackages
 
       - name: Build
-        run: .\build\build.ps1 --exclusive --target=Build
+        run: .\build\build.ps1 --exclusive --target Build
 
       - name: Scan code
-        run: .\build\build.ps1 --exclusive --target=ScanCode
+        run: .\build\build.ps1 --exclusive --target ScanCode
 
       - name: Create package
-        if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}
-        run: .\build\build.ps1 --exclusive --target=CreatePackage
+        if: ${{ github.event_name == 'push' && env.SRC_CHANGED == 'true' }}
+        run: .\build\build.ps1 --exclusive --target CreatePackage
 
       - name: Publish to NuGet Gallery
-        if: ${{ github.event_name == 'push' && steps.init.outputs.src-changed == 'true' }}
+        if: ${{ github.event_name == 'push' && env.SRC_CHANGED == 'true' }}
         run: >
           dotnet nuget push .\output\*.nupkg
           --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}

@@ -22,7 +22,7 @@ namespace Yf.Cake.Layers.Steps
                 Severity = DotNetFormatSeverity.Info
             };
 
-            context.DotNetFormat(context.Root, settings);
+            context.DotNetFormat(context.RootDirectory, settings);
         }
 
         public static void RunSecurityScan(BuildContext context)
@@ -81,7 +81,7 @@ namespace Yf.Cake.Layers.Steps
                 SuppressWarning = true
             };
 
-            var directoryBuildProps = $"{context.Root}Directory.Build.props";
+            var directoryBuildProps = $"{context.RootDirectory}/Directory.Build.props";
             var targetFrameworks =
                 context.XmlPeek(context.TargetProject, "Project/PropertyGroup/TargetFrameworks", xmlPeekSettings) ??
                 context.XmlPeek(directoryBuildProps, "Project/PropertyGroup/TargetFrameworks", xmlPeekSettings);
