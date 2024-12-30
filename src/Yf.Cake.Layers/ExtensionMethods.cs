@@ -2,7 +2,7 @@
 {
     internal static class ExtensionMethods
     {
-        private static readonly XmlPeekSettings _XmlPeekSettings = new XmlPeekSettings()
+        private static readonly XmlPeekSettings _XmlPeekSettings = new()
         {
             SuppressWarning = true
         };
