@@ -2,6 +2,11 @@
 {
     internal static class ExtensionMethods
     {
+        private static readonly XmlPeekSettings _XmlPeekSettings = new()
+        {
+            SuppressWarning = true
+        };
+
         public static string ToPercent(this double value)
         {
             var rounded = (int)Math.Round(value);
@@ -43,6 +48,18 @@
             {
                 return "red";
             }
+        }
+
+        public static string? XmlPeekSafe(this IFrostingContext context, string filePath, string xPath)
+        {
+            if (!context.FileExists(filePath))
+            {
+                return null;
+            }
+
+            var result = context.XmlPeek(filePath, xPath, _XmlPeekSettings);
+
+            return result;
         }
     }
 }
