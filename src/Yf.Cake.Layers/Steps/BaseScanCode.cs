@@ -1,5 +1,4 @@
 ﻿using Cake.Common.Tools.DotNet.Format;
-using Cake.Common.Xml;
 
 namespace Yf.Cake.Layers.Steps
 {
@@ -75,22 +74,18 @@ namespace Yf.Cake.Layers.Steps
 
         private static string GetFrameworkForMetrics(BuildContext context)
         {
-            var xmlPeekSettings = new XmlPeekSettings()
-            {
-                SuppressWarning = true
-            };
-
             var directoryBuildProps = $"{context.RootDirectory}/Directory.Build.props";
             var targetFrameworks =
-                context.XmlPeek(context.TargetProject, "Project/PropertyGroup/TargetFrameworks", xmlPeekSettings) ??
-                context.XmlPeek(directoryBuildProps, "Project/PropertyGroup/TargetFrameworks", xmlPeekSettings);
+                context.XmlPeekSafe(context.TargetProject, "Project/PropertyGroup/TargetFrameworks") ??
+                context.XmlPeekSafe(directoryBuildProps, "Project/PropertyGroup/TargetFrameworks");
 
             string? framework;
             if (targetFrameworks == null)
             {
                 framework =
-                    context.XmlPeek(context.TargetProject, "Project/PropertyGroup/TargetFramework", xmlPeekSettings) ??
-                    context.XmlPeek(directoryBuildProps, "Project/PropertyGroup/TargetFramework", xmlPeekSettings);
+                    context.XmlPeekSafe(context.TargetProject, "Project/PropertyGroup/TargetFramework") ??
+                    context.XmlPeekSafe(directoryBuildProps, "Project/PropertyGroup/TargetFramework")
+                    ?? throw new InvalidOperationException("Could not find a target framework.");
             }
             else
             {

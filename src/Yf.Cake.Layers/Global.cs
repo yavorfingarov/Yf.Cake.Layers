@@ -3,6 +3,7 @@ global using Cake.Common.IO;
 global using Cake.Common.Tools.DotNet;
 global using Cake.Common.Tools.DotNet.Build;
 global using Cake.Common.Tools.DotNet.MSBuild;
+global using Cake.Common.Xml;
 global using Cake.Core.Diagnostics;
 global using Cake.Core.IO;
 global using Cake.Frosting;
