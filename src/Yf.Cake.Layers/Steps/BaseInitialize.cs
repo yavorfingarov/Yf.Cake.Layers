@@ -16,6 +16,7 @@ namespace Yf.Cake.Layers.Steps
         private void Clean(BuildContext context)
         {
             var binObjDirectories =
+                context.GetDirectories("**/node_modules") +
                 context.GetDirectories("**/bin") +
                 context.GetDirectories("**/obj");
 
