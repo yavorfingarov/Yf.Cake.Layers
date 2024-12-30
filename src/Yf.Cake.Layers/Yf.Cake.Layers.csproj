@@ -5,7 +5,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/yavorfingarov/Yf.Cake.Layers</PackageProjectUrl>
     <RepositoryUrl>https://github.com/yavorfingarov/Yf.Cake.Layers.git</RepositoryUrl>
-    <Version>0.3.1</Version>
+    <Version>0.3.2</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Shared Cake pipeline steps.</Description>
     <PublishRepositoryUrl>True</PublishRepositoryUrl>

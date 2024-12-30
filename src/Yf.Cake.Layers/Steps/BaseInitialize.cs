@@ -19,11 +19,12 @@ namespace Yf.Cake.Layers.Steps
                 context.GetDirectories("**/bin") +
                 context.GetDirectories("**/obj");
 
+            var additionalDirectories = AdditionalDirectoriesToClean.SelectMany(x => context.GetDirectories(x));
             var directories = binObjDirectories
                 .Where(x => !x.FullPath.Contains("/build/"))
                 .Append(context.TmpDirectory)
                 .Append(context.OutputDirectory)
-                .Concat(AdditionalDirectoriesToClean.Select(DirectoryPath.FromString));
+                .Concat(additionalDirectories);
 
             foreach (var directory in directories)
             {
