@@ -38,7 +38,7 @@ namespace Yf.Cake.Layers.Steps
         {
             context.Log.Information("Counting lines of code...");
             var linesOfCode = context
-                .GetFiles("./src/**/*.{cs,sql,cshtml,html,css,js,json}")
+                .GetFiles("./src/**/*.{cs,sql,cshtml,html,css,js}")
                 .Select(x => File.ReadAllLines(x.FullPath).Length)
                 .Sum()
                 .Shorten();
