@@ -37,21 +37,28 @@ namespace Yf.Cake.Layers.Steps
         private static void CountLinesOfCode(BuildContext context)
         {
             context.Log.Information("Counting lines of code...");
-            var linesOfCode = context
+            var linesOfCode = 0;
+            var files = context
                 .GetFiles("./src/**/*.{cs,sql,cshtml,html,css,js}")
-                .Select(x => File.ReadAllLines(x.FullPath).Length)
-                .Sum()
-                .Shorten();
+                .Select(x => x.FullPath);
 
+            foreach (var file in files)
+            {
+                var lines = File.ReadAllLines(file);
+                context.Log.Information($"{file} -> {lines.Length}");
+                linesOfCode += lines.Length;
+            }
+
+            var linesOfCodeShort = linesOfCode.Shorten();
             var statusGistJson = new StatusGistJson()
             {
                 Label = "loc",
-                Message = linesOfCode,
+                Message = linesOfCodeShort,
                 Color = "blue"
             };
 
             context.CreateStatusGistJson("lines-of-code", statusGistJson);
-            context.SetStepSummaryOutput("Lines of code", linesOfCode);
+            context.SetStepSummaryOutput("Lines of code", linesOfCodeShort);
         }
 
         private static void CheckSrc(BuildContext context)
