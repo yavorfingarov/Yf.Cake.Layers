@@ -12,8 +12,8 @@ env:
   DOTNET_VERSION: 9.0.x
 
 jobs:
-  analyze:
-    name: Analyze
+  scan:
+    name: Scan
     runs-on: windows-latest
     timeout-minutes: 360
     permissions:
