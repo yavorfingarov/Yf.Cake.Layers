@@ -15,7 +15,6 @@ jobs:
   scan:
     name: Scan
     runs-on: windows-latest
-    timeout-minutes: 360
     permissions:
       security-events: write
     strategy:
@@ -57,4 +56,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:csharp"
+          category: "/language:${{matrix.language}}"
