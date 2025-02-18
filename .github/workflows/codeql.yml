@@ -18,11 +18,20 @@ jobs:
     timeout-minutes: 360
     permissions:
       security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: csharp
+            build-mode: manual
+          - language: actions
+            build-mode: none
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up .NET
+        if: ${{ matrix.build-mode == 'manual' }}
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
@@ -30,17 +39,19 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: csharp
-          build-mode: manual
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
 
       - name: Initialize
-        id: init
+        if: ${{ matrix.build-mode == 'manual' }}
         run: .\build\run.ps1 --exclusive --target Initialize
 
       - name: Restore NuGet packages
+        if: ${{ matrix.build-mode == 'manual' }}
         run: .\build\run.ps1 --exclusive --target RestoreNuGetPackages
 
       - name: Build
+        if: ${{ matrix.build-mode == 'manual' }}
         run: .\build\run.ps1 --exclusive --target Build
 
       - name: Perform CodeQL Analysis
