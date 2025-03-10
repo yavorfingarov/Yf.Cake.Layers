@@ -55,7 +55,7 @@ namespace Yf.Cake.Layers
             }
             else
             {
-                Log.Information($"[Output] {key}={value}");
+                Log.Information($"[Environment] {key}={value}");
             }
         }
 
@@ -75,7 +75,10 @@ namespace Yf.Cake.Layers
         {
             if (_GitHubActions.IsRunningOnGitHubActions)
             {
-                _GitHubActions.Commands.UploadArtifact(directory, filename);
+                _GitHubActions.Commands
+                    .UploadArtifact(directory, filename)
+                    .GetAwaiter()
+                    .GetResult();
             }
             else
             {
