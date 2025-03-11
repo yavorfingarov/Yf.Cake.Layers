@@ -27,7 +27,6 @@ namespace Yf.Cake.Layers.Steps
                 Color = mutationScore.MapToColor(70, 85),
             };
 
-            context.UploadArtifact($"{context.TestResultsDirectory}/reports", $"TestResults-{context.Timestamp}");
             context.CreateStatusGistJson("mutation-score", statusGistJson);
             context.SetStepSummaryOutput("Mutation score", mutationScorePercent);
         }

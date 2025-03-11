@@ -39,6 +39,7 @@ namespace Yf.Cake.Layers
             _GitHubActions = context.GitHubActions();
             var now = DateTime.UtcNow;
             Timestamp = $"{now:yyyy}.{now:MM}.{now:dd}.{now:HH}{now:mm}";
+            SetEnvironmentVariable("TIMESTAMP", Timestamp);
         }
 
         public void CreateStatusGistJson(string filename, StatusGistJson statusGistJson)
@@ -68,21 +69,6 @@ namespace Yf.Cake.Layers
             else
             {
                 Log.Information($"[StepSummary] {label}: {value}");
-            }
-        }
-
-        public void UploadArtifact(DirectoryPath directory, string filename)
-        {
-            if (_GitHubActions.IsRunningOnGitHubActions)
-            {
-                _GitHubActions.Commands
-                    .UploadArtifact(directory, filename)
-                    .GetAwaiter()
-                    .GetResult();
-            }
-            else
-            {
-                Log.Information($"[Upload] {directory} -> {filename}");
             }
         }
 
