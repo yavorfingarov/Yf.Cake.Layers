@@ -59,7 +59,6 @@ namespace Yf.Cake.Layers.Steps
             var snapshotsDirectory = $"{context.TestResultsDirectory}/snapshots";
             context.CreateDirectory(snapshotsDirectory);
             context.CopyFiles("./tests/**/*.received.*", snapshotsDirectory, preserveFolderStructure: true);
-            context.UploadArtifact(context.TestResultsDirectory, $"TestResults-{context.Timestamp}");
 
             throw exception;
         }
