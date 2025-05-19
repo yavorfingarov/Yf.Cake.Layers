@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Authors>Yavor Fingarov</Authors>
@@ -21,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Cake.Frosting" Version="5.0.0" />
     <PackageReference Include="Cake.Frosting.Git" Version="5.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Metrics" Version="3.3.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Metrics" Version="4.14.0" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
